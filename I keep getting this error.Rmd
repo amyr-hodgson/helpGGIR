@@ -1,0 +1,83 @@
+---
+title: "I keep getting this error..."
+author: "Amy R Hodgson"
+date: "11/07/2019"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+This document will describe some errors that may be produced when using GGIR and their solutions. 
+
+### 1. The sleep log error
+
+If you have chosen to include a sleep log, you may see the following error:
+
+```{r, eval=F}
+Error in g.report.part4(datadir = datadir, metadatadir = metadatadir,  :
+  object 'personSummarynames_backup' not found
+```
+
+You may also see this in the part 4 output, which gives you a clue about why you may see this error:
+
+```{r, eval = F}
+Warning: sleeplog id is stored as format: A, while
+                           code expects format: B
+```
+
+If this error crops up, it may be due to a discrepancy between the ID in the sleep log and the one the script is expecting based on the `idloc` argument which can be specified at the start of the script. When `idloc = 1` (default), the ID will be drawn from the file header, and when `idloc = 2`, it will be drawn from the numbers or letters before the underscore in the filename. Personally I find it easier to use `idloc = 2` as it is easy to change the file name and check that it matches the sleep log.  
+
+**NB** If you get this error, it will probably not be resolved by just changing the name in the sleep log or the `loglocation` argument and running it again- you need to start from scratch. Delete the output folders created in the time you got the error, and run it again (or change the studyname argument so that it creates new folders).
+
+If this does not resolve the error, try using numbers rather than letters for your ID, or using `idloc = 1` and ensuring the ID in the header field matches that in the sleep log. Others have experienced this error due to a bug, and the package developer's response is [here](https://groups.google.com/forum/#!msg/rpackageggir/J4I_gfWdu9E/j2ABYS1EAgAJ).
+
+### 2. File path error
+
+You may find that your script stops running right at the start and you get one of the following error messages (or similar). 
+
+```{r, eval = F}
+Error: '\U' used without hex digits in character string starting ""C:\U"
+
+Error in array(x, c(length(x), 1L), if (!is.null(names(x))) list(names(x), : 
+'data' must be of a vector type, was 'NULL'
+
+cannot open file 'C:/Users[]myho/Documents/GENEActiv/Data/
+12_left wrist_033174_2017-07-10-12-37-57.bin': 
+Invalid argumentError in array(x, c(length(x), 1L), if (!is.null(names(x))) list(names(x),  : 
+  'data' must be of a vector type, was 'NULL'
+  
+Error: '\D' is an unrecognized escape in character string starting
+""C:/Users/amyho/OneDrive/Documents/GENEActiv/Data\D"
+```
+
+This usually means there is a problem with how you have specified the file path. Make sure you use / when specifying the directory rather than \\ . Avoid spaces in the file path.
+
+### 3. File location error
+
+The error below also usually means there is some kind of problem relating to the file path or where the files are located.
+
+```{r, eval=F}
+closing unused connection 3 (C:/filepath/filename.bin)
+```
+
+Try to make sure that your set up for analysing the data means that the file path is short, to minimise the risk of errors. If problems persist, it can be easier to store the data and output folders on a USB stick while you run the analysis. Of course you should back up your files if you do this. 
+
+### 4. Number of days in sleep log error
+
+If you do not have the right number of onset and wake columns in your sleep log, you may see the following error.
+
+```{r, eval = FALSE}
+Error in `[.data.frame`(S, , coln1 + ((i - 1) * 2)) :
+undefined columns selected
+```
+
+Make sure the number of onset and wake columns matches the number of days in the actigraphy data. If you don't have sleep log data for some of the days, create the right number of columns but leave them blank.
+
+### 5. Full output not produced/problems using .csv files
+
+GGIR is capable of processing data from both GENEActiv .bin and .csv files, though using the .csv files
+(converted in the GENEActiv software) is more likely to produce errors and takes significantly longer to run
+(30+ minutes versus a 5-10 minutes for a .bin file). When using .csv files you also may find that the full output is not produced. For this reason I would recommend using the .bin files.
+
+It is also important to note that GGIR will not work with files converted to epochs with the GENEActiv software. This applies even to the 1 second epoch conversion. You will encounter errors and the script will not run.
