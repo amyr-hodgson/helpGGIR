@@ -1,0 +1,50 @@
+---
+title: "Analysis Guide"
+author: "Amy R Hodgson"
+date: "22/07/2019"
+output: pdf_document
+---
+
+This guide describes how to analyse data from the GENEActiv accelerometers in R.
+GGIR is an R package created by Dr Vincent van Hees to process raw accelerometry
+data. Van Hees provides a shell function, which can provide a number of
+variables for activity and sleep research, requiring only the specification of
+input and output folder locations, as well as a few other small adjustments. The
+signal processing includes automatic calibration, detection of abnormal values,
+detection of non-wear and calculation of average acceleration. GGIR then uses
+this information estimate physical activity, inactivity and sleep. The result is
+a number of .csv and .pdf files containing relevant variables.
+
+This package has been used by a number of research groups around the world, and a list of publications
+using/related to GGIR is available here: https://github.com/wadpac/GGIR/wiki/Publication-list. Also
+see here https://github.com/wadpac/GGIR/issues for a place where questions about GGIR can be asked.
+Questions are usually answered by the author or another user of GGIR. If you run into a problem it’s a good
+idea to check here, as someone else may have had the same issue and found a solution.
+
+### Step 1: Organise your folders
+
+I would recommend creating one folder to contain all parts of your analysis, named in the following way:
+
+> [year]\_[your-name]_[keyword-for-your-study]
+
+So my folder name would be:
+
+> 2019_Amy-Hodgson_example
+
+Within this folder I would have a folder for your scripts, one for your raw data, and another for the results that will be produced. In this guide, the folder containing the raw data will be named *Data* and the folder containing the results will be called *Output*. 
+
+### Step 2: Get your data
+
+*remember about IDs when getting data from GENEActiv software*
+
+I would recommend using the raw .bin files produced by the GENEActiv software. Save all of these files in your *Data* folder.
+
+### Step x: Sleep log checklist
+
+In my experience, this is the part of the script that is most likely to cause problems. However, if you follow the items in this checklist, the risk of errors or other problems will be minimised.
+
+1. Do you have the same number of onset and wake columns in your sleep log as you have days in your actigraphy data? If you have some days missing in the sleep log, still create the right number of columns, but leave them blank.
+
+2. 
+
+If you are having problems, check the *I keep getting this error* guide, which described a few possible problems and solutions.
