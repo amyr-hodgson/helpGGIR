@@ -34,19 +34,19 @@ So my folder name would be:
 
 > 2019-08-02_Amy-Hodgson_example
 
-Within this folder create a folder for your scripts, one for your raw data, and another for the results that will be produced. In this guide, the folder containing the raw data will be named *Data*, the folder containing the results will be called *Output*, and the folder containing the sleep diary is called *Logs*. 
+Within this folder create a folder for your scripts, one for your raw data, and another for the results that will be produced. I suggest naming these in the same pattern as the previous folder. In this guide, the folder containing the raw data will be named *Date_Name_Data*, the folder containing the results will be called *Date_Name_Output*, and the folder containing the sleep diary is called *Date_Name_Logs*. 
 
 ### Step 2: Get your data
 
 *remember about IDs when getting data from GENEActiv software*
 
-Download the raw .bin files produced by the GENEActiv software, and save all of these files in your *Data* folder. Make sure you have specified appropriate unique IDs. If you are using a sleep diary, remember that the ID in the diary must exactly match the data file ID. It is also important to note that GGIR will not work with files converted to epochs with the GENEActiv software, so it is better to simply use the .bin files.
+Download the raw .bin files produced by the GENEActiv software, and save all of these files in your *Date_Name_Data* folder. Make sure you have specified appropriate unique IDs. If you are using a sleep diary, remember that the ID in the diary must exactly match the data file ID. It is also important to note that GGIR will not work with files converted to epochs with the GENEActiv software, so it is better to simply use the .bin files.
 
 Steps 3 & 4 relate to setting up the sleep diaries for use with GGIR. If you are not using a sleep diary, feel free to skip these steps.
 
 ### Step 3: Set up your sleep diary
 
-GGIR can use basic infomation from a sleep diary to improve estimates of sleep parameters. Your sleep log should be set up so that the first column contains the participant IDs and the subsequent columns contain alternating sleep onset and wake times. See the GGIR vignette [here](https://cran.r-project.org/web/packages/GGIR/vignettes/GGIR.html#output-part-4) for an example of how this should look. Each row should contain a different participant.
+GGIR can use basic infomation from a sleep diary to improve estimates of sleep parameters. Your sleep log should be set up so that the first column contains the participant IDs and the subsequent columns contain alternating sleep onset and wake times. See the GGIR vignette here (https://cran.r-project.org/web/packages/GGIR/vignettes/GGIR.html#output-part-4) for an example of how this should look. Each row should contain a different participant.
 
 ### Step 4: Sleep diary checklist
 
@@ -77,9 +77,9 @@ Secondly, you will need an R script or RMarkdown file to use for your analysis. 
 
 The GGIR shell function itself, which is shown in Step 6, requires some input that is easier to specify beforehand. The arguments to specify are:
 
-`datadir` specifies a file path to the data you want to analyse. In most cases you will want to analyse multiple files, and so you will specify a folder rather than a single file. Using the `list.files()` function creates a list of files within the folder you specify, which should be the *Data* folder you created earlier to store all of your .bin files from the GeneActiv software. Make sure that the `full.names` argument is set to `TRUE`, so that the full file paths are listed rather than the relative file paths. Once you have run this code, check that the files are actually listed as you want (you can simply type `datadir` into the console and it should print the list of files).
+`datadir` specifies a file path to the data you want to analyse. In most cases you will want to analyse multiple files, and so you should specify the *Date_Name_Data* folder you created earlier to store all of your .bin files from the GeneActiv software. 
 
-`outputdir` specifies the path to the folder where you want the analysed data to be stored. In this case it is the folder called *Output*.
+`outputdir` specifies the path to the folder where you want the analysed data to be stored. In this case it is the folder called *Date_Name_Output*.
 
 `studyname` specifies the name of the study, which will determine the name of the folder containing the analysed data (within the *Output* folder).
 
@@ -93,11 +93,10 @@ The GGIR shell function itself, which is shown in Step 6, requires some input th
 
 ```{r, eval = F}
 
-datadir <- list.files("C:/Users/amyho/OneDrive/Documents/GENEActiv/Data", 
-                      full.names =T) 
-outputdir <- "C:/Users/amyho/OneDrive/Documents/GENEActiv/Output"
+datadir <- "C:/Users/amyho/OneDrive/Documents/GENEActiv/Date_Name_Data"
+outputdir <- "C:/Users/amyho/OneDrive/Documents/GENEActiv/Date_Name_Output"
 studyname <- "Date_Name_Keyword"
-loglocation <- "C:/Users/amyho/OneDrive/Documents/GENEActiv/Logs/Date_name_Sleeplogs.csv"
+loglocation <- "C:/Users/amyho/OneDrive/Documents/GENEActiv/Logs/Date_Name_Sleeplogs.csv"
 
 nnights <- 5 
 

@@ -12,8 +12,7 @@ Necessary set up.
 library(GGIR)
 library(zoo)
 
-datadir <- list.files("path_to_data_folder", 
-                      full.names =T) 
+datadir <- "path_to_data_folder"
 
 outputdir <- "path_to_output_folder"
 
