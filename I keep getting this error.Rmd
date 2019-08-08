@@ -28,7 +28,7 @@ Warning: sleeplog id is stored as format: A, while
 
 If this error crops up, it may be due to a discrepancy between the ID in the sleep log and the one the script is expecting based on the `idloc` argument which can be specified at the start of the script. When `idloc = 1` (default), the ID will be drawn from the file header, and when `idloc = 2`, it will be drawn from the numbers or letters before the underscore in the filename. Personally I find it easier to use `idloc = 2` as it is easy to change the file name and check that it matches the sleep log.  
 
-**NB** If you get this error, it will probably not be resolved by just changing the name in the sleep log or the `loglocation` argument and running it again- you need to start from scratch. Delete the output folders created in the time you got the error, and run it again (or change the studyname argument so that it creates new folders).
+**NB** If you get this error, it will probably not be resolved by just changing the name in the sleep log or the `loglocation` argument and running it again- you need to start from scratch. Make sure the `overwrite` argument is set to `TRUE` so that the processing from the time you got the error is not re-used, and run it again (or change the studyname argument so that it creates new folders).
 
 If this does not resolve the error, try using numbers rather than letters for your ID, or using `idloc = 1` and ensuring the ID in the header field matches that in the sleep log. Others have experienced this error due to a bug, and the package developer's response is [here](https://groups.google.com/forum/#!msg/rpackageggir/J4I_gfWdu9E/j2ABYS1EAgAJ).
 

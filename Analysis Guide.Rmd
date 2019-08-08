@@ -19,7 +19,7 @@ this information estimate physical activity, inactivity and sleep. The result is
 a number of .csv and .pdf files containing relevant variables.
 
 This package has been used by a number of research groups around the world, and a list of publications
-using/related to GGIR is available [here](https://github.com/wadpac/GGIR/wiki/Publication-list). Also
+using/related to GGIR is available here (https://github.com/wadpac/GGIR/wiki/Publication-list). Also
 see here https://github.com/wadpac/GGIR/issues for a place where questions about GGIR can be asked.
 Questions are usually answered by the author or another user of GGIR. If you run into a problem it’s a good
 idea to check here, as someone else may have had the same issue and found a solution.
@@ -62,15 +62,30 @@ If you are having problems, check the *I keep getting this error* guide, which d
 
 ### Step 5: Set up for GGIR shell function
 
-First, create a new R script or RMarkdown file to use for your analysis. The GGIR shell function, which is shown in Step 6, requires some input that is easier to specify beforehand. 
+Firstly, load in the packages you will need to run your script.
 
-The `datadir` argument should specify a file path to the data you want to analyse. In most cases you will want to analyse multiple files, and so you will specify a folder rather than a single file. Using the `list.files()` function creates a list of files within the folder you specify, which should be the *Data* folder you created earlier to store all of your .bin files from the GeneActiv software. Make sure that the `full.names` argument is set to `TRUE`, so that the full file paths are listed rather than the relative file paths.
+\vspace{3mm}
 
-The `outputdir` argument should specify the path to the folder where you want the analysed data to be stored. In this case it is the folder called *Output*.
+```{r, eval = F}
+
+library(GGIR)
+library(zoo)
+
+```
+
+Secondly, you will need an R script or RMarkdown file to use for your analysis. I have included an otherwise blank .Rmd including the setup section and shell function in the *shell_function* file in this repository, which can be downloaded and used as a template. 
+
+The GGIR shell function itself, which is shown in Step 6, requires some input that is easier to specify beforehand. The arguments to specify are:
+
+`datadir` specifies a file path to the data you want to analyse. In most cases you will want to analyse multiple files, and so you will specify a folder rather than a single file. Using the `list.files()` function creates a list of files within the folder you specify, which should be the *Data* folder you created earlier to store all of your .bin files from the GeneActiv software. Make sure that the `full.names` argument is set to `TRUE`, so that the full file paths are listed rather than the relative file paths. Once you have run this code, check that the files are actually listed as you want (you can simply type `datadir` into the console and it should print the list of files).
+
+`outputdir` specifies the path to the folder where you want the analysed data to be stored. In this case it is the folder called *Output*.
 
 `studyname` specifies the name of the study, which will determine the name of the folder containing the analysed data (within the *Output* folder).
 
 `loglocation` should be the path to the location of your sleep log. Don't forget to include the file extension, which should be `.csv`, as the sleep log file should be saved in this format. 
+
+`nnights` is the number of nights in your data.
 
 **Remember about file paths- can you shorten them by setting wd and using ~?**
 
@@ -84,7 +99,14 @@ outputdir <- "C:/Users/amyho/OneDrive/Documents/GENEActiv/Output"
 studyname <- "Date_Name_Keyword"
 loglocation <- "C:/Users/amyho/OneDrive/Documents/GENEActiv/Logs/Date_name_Sleeplogs.csv"
 
-nnights <- 5 # The number of nights in your data
+nnights <- 5 
+
+```
+
+You may also wish to specify the following arguments, which are explained in the comments.
+
+```{r, eval = F}
+
 f0 <- 1 # File to start with (default = 1)
 f1 <- 4 # File to finish with (default = number of files available)
 
@@ -92,25 +114,13 @@ f1 <- 4 # File to finish with (default = number of files available)
 
 If you have problems due to the file paths, there is some advice for potential solutions in the error guide.
 
-Secondly, load in the packages you will need to run your script.
-
-\vspace{3mm}
-
-```{r, eval = F}
-
-library(GGIR)
-library(zoo)
-
-```
-
-
 ### Step 6: The shell function
 
-This function may seem very long, but if you have specified the variables above, there should be very few changes that need to be made in most circumstances. If you are not using a sleep log, remove this argument from the function. If your study involves assessing physical activity and you want to alter the thresholds, or you want more information about any of these arguments, each is described in more detail in either the vignette or the package documentation.
+This function may seem very long, but if you have specified the variables above, there should be very few changes that need to be made in most circumstances. If you are not using a sleep log, remove the `loglocation` argument from the function. If your study involves assessing physical activity and you want to alter the thresholds, or you want more information about any of these arguments, each is described in more detail in either the vignette or the package documentation.
 
 A couple of arguments to be aware of are `includenightcrit`, which refers to the minimum number of valid hours per night (set by default to 16), and `def.noc.sleep` allows you to specify the time window in which sustained activity will be interpreted as sleep, only used if there is no sleep log.
 
-Copy the shell function below your setup code, and you should be ready to run your analysis. Simply run the code and it should begin processing your data. Depending on how many participants you have, and the computer you are using, this may take quite a long time- perhaps even several hours. Do not be concerned by this, the script will stop and produce an error message if there is a problem. However if your computer crashes, you may need to find a more powerful computer to run your analysis.
+An example of the GGIR shell function is shown below. Different versions of this function can be found in the package vignette and documentation, and this can be changed to suit your purposes, but this is the version I have included in the template. When you have  the shell function below your setup code, and are happy with how it is set up, you should be ready to run your analysis. Simply run the code and it should begin processing your data. Depending on how many participants you have, and the computer you are using, this may take quite a long time- perhaps even several hours. Do not be concerned by this, the script will stop and produce an error message if there is a problem. However if your computer crashes, you may need to find a more powerful computer to run your analysis.
 
 \vspace{3mm}
 
@@ -181,6 +191,6 @@ Once the function has run successfully, it is a good idea to check your data for
 Secondly, there is an option to run the script and visualise only outliers. By default `outliers.only` is set to `FALSE`, but if you change this to `TRUE`, only nights with a difference in onset or waking time larger than `criterror` will be visualised, allowing you should be able to see any potentially abnormal values in your output.
 **Check this works as expected**
 
-GGIR produces a large number of variables in the output. There is a dictionary of variables on the GGIR vignette page, but I have also made a shorter guide describing the key sleep variables and how they are calculated. 
+GGIR produces a large number of variables in the output. There is a dictionary of variables on the GGIR vignette page, but there is also a section in the lab's GENEActiv manual describing the key sleep variables and where to find them. 
 
 
