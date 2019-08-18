@@ -24,6 +24,8 @@ see here https://github.com/wadpac/GGIR/issues for a place where questions about
 Questions are usually answered by the author or another user of GGIR. If you run into a problem it’s a good
 idea to check here, as someone else may have had the same issue and found a solution.
 
+This guide was made using version 1.9-2 of GGIR.
+
 ### Step 1: Organise your folders
 
 I would recommend creating one folder to contain all parts of your analysis, named in the following way:
@@ -37,8 +39,6 @@ So my folder name would be:
 Within this folder create a folder for your scripts, one for your raw data, and another for the results that will be produced. I suggest naming these in the same pattern as the previous folder. In this guide, the folder containing the raw data will be named *Date_Name_Data*, the folder containing the results will be called *Date_Name_Output*, and the folder containing the sleep diary is called *Date_Name_Logs*. 
 
 ### Step 2: Get your data
-
-*remember about IDs when getting data from GENEActiv software*
 
 Download the raw .bin files produced by the GENEActiv software, and save all of these files in your *Date_Name_Data* folder. Make sure you have specified appropriate unique IDs. If you are using a sleep diary, remember that the ID in the diary must exactly match the data file ID. It is also important to note that GGIR will not work with files converted to epochs with the GENEActiv software, so it is better to simply use the .bin files.
 
@@ -73,7 +73,7 @@ library(zoo)
 
 ```
 
-Secondly, you will need an R script or RMarkdown file to use for your analysis. I have included an otherwise blank .Rmd including the setup section and shell function in the *shell_function* file in this repository, which can be downloaded and used as a template. 
+Secondly, you will need an R script or RMarkdown file to use for your analysis. I have included an otherwise blank .Rmd including the setup section and shell function in the *shell_function* file in this repository, which can be used as a template. 
 
 The GGIR shell function itself, which is shown in Step 6, requires some input that is easier to specify beforehand. The arguments to specify are:
 
@@ -86,8 +86,6 @@ The GGIR shell function itself, which is shown in Step 6, requires some input th
 `loglocation` should be the path to the location of your sleep log. Don't forget to include the file extension, which should be `.csv`, as the sleep log file should be saved in this format. 
 
 `nnights` is the number of nights in your data.
-
-**Remember about file paths- can you shorten them by setting wd and using ~?**
 
 \vspace{3mm}
 
@@ -188,7 +186,6 @@ g.shell.GGIR(
 Once the function has run successfully, it is a good idea to check your data for any mistakes or problems. Firstly, if you have used a sleep log, the 'sleeplog_used' column of the part 4 output should say TRUE. If it is FALSE, this means that there has been a problem- you may have made a mistake specifying the location of the sleep log, or there may have been an issue with matching the IDs.
 
 Secondly, there is an option to run the script and visualise only outliers. By default `outliers.only` is set to `FALSE`, but if you change this to `TRUE`, only nights with a difference in onset or waking time larger than `criterror` will be visualised, allowing you should be able to see any potentially abnormal values in your output.
-**Check this works as expected**
 
 GGIR produces a large number of variables in the output. There is a dictionary of variables on the GGIR vignette page, but there is also a section in the lab's GENEActiv manual describing the key sleep variables and where to find them. 
 

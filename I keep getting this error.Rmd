@@ -14,12 +14,16 @@ This document will describe some errors that may be produced when using GGIR and
 
 If you have chosen to include a sleep log, you may see the following error:
 
+\vspace{3mm}
+
 ```{r, eval=F}
 Error in g.report.part4(datadir = datadir, metadatadir = metadatadir,  :
   object 'personSummarynames_backup' not found
 ```
 
 You may also see this in the part 4 output, which gives you a clue about why you may see this error:
+
+\vspace{3mm}
 
 ```{r, eval = F}
 Warning: sleeplog id is stored as format: A, while
@@ -30,11 +34,13 @@ If this error crops up, it may be due to a discrepancy between the ID in the sle
 
 **NB** If you get this error, it will probably not be resolved by just changing the name in the sleep log or the `loglocation` argument and running it again- you need to start from scratch. Make sure the `overwrite` argument is set to `TRUE` so that the processing from the time you got the error is not re-used, and run it again (or change the studyname argument so that it creates new folders).
 
-If this does not resolve the error, try using numbers rather than letters for your ID, or using `idloc = 1` and ensuring the ID in the header field matches that in the sleep log. Others have experienced this error due to a bug, and the package developer's response is [here](https://groups.google.com/forum/#!msg/rpackageggir/J4I_gfWdu9E/j2ABYS1EAgAJ).
+If this does not resolve the error, try using numbers rather than letters for your ID, or using `idloc = 1` and ensuring the ID in the header field matches that in the sleep log. Others have experienced this error due to a bug, and the package developer's response is here: https://groups.google.com/forum/#!msg/rpackageggir/J4I_gfWdu9E/j2ABYS1EAgAJ.
 
 ### 2. File path error
 
 You may find that your script stops running right at the start and you get one of the following error messages (or similar). 
+
+\vspace{3mm}
 
 ```{r, eval = F}
 Error: '\U' used without hex digits in character string starting ""C:\U"
@@ -57,6 +63,8 @@ This usually means there is a problem with how you have specified the file path.
 
 The error below also usually means there is some kind of problem relating to the file path or where the files are located.
 
+\vspace{3mm}
+
 ```{r, eval=F}
 closing unused connection 3 (C:/filepath/filename.bin)
 ```
@@ -66,6 +74,8 @@ Try to make sure that your set up for analysing the data means that the file pat
 ### 4. Number of days in sleep log error
 
 If you do not have the right number of onset and wake columns in your sleep log, you may see the following error.
+
+\vspace{3mm}
 
 ```{r, eval = FALSE}
 Error in `[.data.frame`(S, , coln1 + ((i - 1) * 2)) :

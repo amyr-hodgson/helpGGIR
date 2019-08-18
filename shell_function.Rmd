@@ -20,7 +20,7 @@ studyname <- "Date_Name_Keyword"
 
 loglocation <- "path_to_sleeplog"
 
-nnights <- 5 
+nnights <- number_of_nights
 
 ```
 
