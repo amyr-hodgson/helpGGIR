@@ -187,6 +187,20 @@ Once the function has run successfully, it is a good idea to check your data for
 
 Secondly, there is an option to run the script and visualise only outliers. By default `outliers.only` is set to `FALSE`, but if you change this to `TRUE`, only nights with a difference in onset or waking time larger than `criterror` will be visualised, allowing you should be able to see any potentially abnormal values in your output.
 
-GGIR produces a large number of variables in the output. There is a dictionary of variables on the GGIR vignette page, but there is also a section in the lab's GENEActiv manual describing the key sleep variables and where to find them. 
+GGIR produces a large number of variables in the output. There is a dictionary of variables on the GGIR vignette page, and further details on these in the documentation. For convenience, there is also a section in the lab's GENEActiv manual describing the key sleep variables and where to find them. A couple of extra variables not listed there are:
 
+Variable              |    Description
+----------------------|--------------------------------------------------------------------------------------------------------------
+M5... (part 2)        | Variables relating to the most active 5 hours (window can be adjusted with winhr)
+                      |
+L5... (part 2)        | Variables relating to the least active 5 hours (window can be adjusted with winhr)
+                      |
+Spt... (part 4)       | These variables relate to the 'sleep period time' window. See van Hees (2018) *Scientific Reports* for more details.
+                      |
+nightwak (part 5)     | Night waking
+                      |
+M10  (part 5)         | Variables relating to the most active 10 hours
+                      |
+L5   (part 5)         | Variables relating to the least active 5 hours
+                      |
 
