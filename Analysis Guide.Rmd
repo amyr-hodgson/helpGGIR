@@ -245,7 +245,13 @@ N valid hours              | Number of hours with valid data during the day
 
 ## Part 4 .csv files
 
-There are two part 4 files, *part4_nightsummary_sleep_cleaned.csv*, which gives  and *part4_summary_sleep_cleaned.csv*. 
+Part 4 provides a lot of the sleep variables. There are two part 4 files, *part4_nightsummary_sleep_cleaned.csv*, which gives daily output and *part4_summary_sleep_cleaned.csv* which gives output summarised for each participant. 
+
+**Important note from documentation:** "Please interpret sleeplog as the method to derived the Sleep Period Time (SPT) window derived from (as applicable): sleeplog, HDCZA algorithm, L5R6 algorithm, or specified by researcher as a constant time interval."
+
+For more information on how the 'SPT window' is calculated in the absence of a sleep log, see van Hees (2018) *Scientific Reports*.
+
+Key variables from the part 4 output: 
 
 Variable                        |    Description
 --------------------------------|-----------------------------------------------------------------------------------------------------
@@ -273,6 +279,8 @@ n_nights_complete               | Number of nights complete, which means both ac
 
 ## Part 5 .csv files
 
+The *part5_daysummary.csv* gives variables for each participant for each day, and *part5_personsummary.csv* gives the variables summarised by participant. Key variables:
+
  Variable                        |    Description
 ---------------------------------|-----------------------------------------------------------------------------------------------------
 dur_nightsleep_min               | Sleep duration in minutes
@@ -297,22 +305,8 @@ knitr::include_graphics("vis_sleep.PNG")
 ```
 
 
-## Key variables
+## Working with the output
 
-GGIR produces a large number of variables in the output. There is a dictionary of variables on the GGIR vignette page, and further details on these in the documentation. Here is a list of some of the key variables you may be interested in:
+Sometimes you may want to combine data from different sets of GGIR output, or combine different parts of GGIR output. This is not difficult, but I wrote a couple of functions to make it easier in a package called easyGGIR that can be downloaded from my github here https://github.com/amyr-hodgson.
 
-Variable              |    Description
-----------------------|--------------------------------------------------------------------------------------------------------------
-M5... (part 2)        | Variables relating to the most active 5 hours (window can be adjusted with winhr)
-                      |
-L5... (part 2)        | Variables relating to the least active 5 hours (window can be adjusted with winhr)
-                      |
-Spt... (part 4)       | These variables relate to the 'sleep period time' window. See van Hees (2018) *Scientific Reports* for more details.
-                      |
-nightwak (part 5)     | Night waking
-                      |
-M10  (part 5)         | Variables relating to the most active 10 hours
-                      |
-L5   (part 5)         | Variables relating to the least active 5 hours
-                      |
-
+Hopefully this guide has been helpful, and good luck with your analysis.
