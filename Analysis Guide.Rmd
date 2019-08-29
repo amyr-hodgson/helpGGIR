@@ -3,10 +3,12 @@ title: "Analysis Guide"
 author: "Amy R Hodgson"
 date: "22/07/2019"
 output:
-  pdf_document: default
+  pdf_document: 
+    toc: yes
   html_document:
     df_print: paged
 ---
+# Introduction
 
 This guide describes how to analyse data from the GENEActiv accelerometers in R.
 GGIR is an R package created by Dr Vincent van Hees to process raw accelerometry
@@ -26,7 +28,9 @@ idea to check here, as someone else may have had the same issue and found a solu
 
 This guide was made using version 1.9-2 of GGIR.
 
-### Step 1: Organise your folders
+# Analysis Instructions
+
+## Step 1: Organise your folders
 
 I would recommend creating one folder to contain all parts of your analysis, named in the following way:
 
@@ -38,17 +42,17 @@ So my folder name would be:
 
 Within this folder create a folder for your scripts, one for your raw data, and another for the results that will be produced. I suggest naming these in the same pattern as the previous folder. In this guide, the folder containing the raw data will be named *Date_Name_Data*, the folder containing the results will be called *Date_Name_Output*, and the folder containing the sleep diary is called *Date_Name_Logs*. 
 
-### Step 2: Get your data
+## Step 2: Get your data
 
 Download the raw .bin files produced by the GENEActiv software, and save all of these files in your *Date_Name_Data* folder. Make sure you have specified appropriate unique IDs. If you are using a sleep diary, remember that the ID in the diary must exactly match the data file ID. It is also important to note that GGIR will not work with files converted to epochs with the GENEActiv software, so it is better to simply use the .bin files.
 
 Steps 3 & 4 relate to setting up the sleep diaries for use with GGIR. If you are not using a sleep diary, feel free to skip these steps.
 
-### Step 3: Set up your sleep diary
+## Step 3: Set up your sleep diary
 
-GGIR can use basic infomation from a sleep diary to improve estimates of sleep parameters. Your sleep log should be set up so that the first column contains the participant IDs and the subsequent columns contain alternating sleep onset and wake times. See the GGIR vignette here (https://cran.r-project.org/web/packages/GGIR/vignettes/GGIR.html#output-part-4) for an example of how this should look. Each row should contain a different participant.
+GGIR can use basic infomation from a sleep diary to improve estimates of sleep parameters. Your sleep log should be set up so that the first column contains the participant IDs and the subsequent columns contain alternating sleep onset and wake times. The timestamps should be in HH:MM:SS format. See the GGIR vignette here (https://cran.r-project.org/web/packages/GGIR/vignettes/GGIR.html#output-part-4) for an example of how this should look. The first row should be column names, and each subsequent row should contain a participant ID and data.
 
-### Step 4: Sleep diary checklist
+## Step 4: Sleep diary checklist
 
 In my experience, integrating the sleep diary is the part of the script that is most likely to cause problems. However, if you follow the items in this checklist, the risk of errors or other problems will be minimised.
 
@@ -60,7 +64,7 @@ In my experience, integrating the sleep diary is the part of the script that is 
 
 If you are having problems, check the *I keep getting this error* guide, which described a few possible problems and solutions.
 
-### Step 5: Set up for GGIR shell function
+## Step 5: Set up for GGIR shell function
 
 Firstly, load in the packages you will need to run your script.
 
@@ -111,7 +115,7 @@ f1 <- 4 # File to finish with (default = number of files available)
 
 If you have problems due to the file paths, there is some advice for potential solutions in the error guide.
 
-### Step 6: The shell function
+## Step 6: The shell function
 
 This function may seem very long, but if you have specified the variables above, there should be very few changes that need to be made in most circumstances. If you are not using a sleep log, remove the `loglocation` argument from the function. If your study involves assessing physical activity and you want to alter the thresholds, or you want more information about any of these arguments, each is described in more detail in either the vignette or the package documentation.
 
@@ -181,13 +185,121 @@ g.shell.GGIR(
 ```
 
 
-### Step 7: Check your data
+## Step 7: Check your data
 
 Once the function has run successfully, it is a good idea to check your data for any mistakes or problems. Firstly, if you have used a sleep log, the 'sleeplog_used' column of the part 4 output should say TRUE. If it is FALSE, this means that there has been a problem- you may have made a mistake specifying the location of the sleep log, or there may have been an issue with matching the IDs.
 
 Secondly, there is an option to run the script and visualise only outliers. By default `outliers.only` is set to `FALSE`, but if you change this to `TRUE`, only nights with a difference in onset or waking time larger than `criterror` will be visualised, allowing you should be able to see any potentially abnormal values in your output.
 
-GGIR produces a large number of variables in the output. There is a dictionary of variables on the GGIR vignette page, and further details on these in the documentation. For convenience, there is also a section in the lab's GENEActiv manual describing the key sleep variables and where to find them. A couple of extra variables not listed there are:
+# Interpreting the Output
+
+Once you have run the GGIR shell function successfully, the results section of your output folder should contain two further folders:
+
+- file summary reports
+- QC
+  
+And the following files:
+
+- part2_daysummary.csv
+- part2_summary.csv
+- part4_nightsummary_sleep_cleaned.csv
+- part4_summary_sleep_cleaned.csv
+- part5_daysummary...
+- part5_personsummary...
+- visualisation_sleep.pdf
+
+I will briefly describe this output and how to interpret it. The variables you will be interested in are mostly in the part 2, 4 and 5 .csv files.
+
+## file summary reports
+
+In this folder are pdf files containing graphs of some key variables (sleep duration, sleep efficiency etc), and actograms showing activity patterns across each day. There should be one for each participant. Below is an example of the graphs and actograms.
+
+```{r, echo = F, fig.align = 'center'}
+knitr::include_graphics("sum_rep_chart.PNG")
+knitr::include_graphics("sum_rep_actogram.PNG")
+```
+
+
+## QC
+
+This folder contains a .csv file *data_quality_report* containing variables describing data quality, the full version of the part 4 .csv files, and a .pdf *plots_to_check_data_quality_1* with plots indicating data quality across the measurement period. The R session info is also in this folder. 
+
+## Part 2 .csv files
+
+You should see files named *part2_daysummary.csv* and *part2_summary.csv*. The *daysummary* file shows variables for each participant for each day, while the *summary* file shows the variables averaged for each participant. A few key variables for this section are below. There are also many physical activity variables in the GGIR outout, but I will focus more on those relevant to sleep.
+
+
+Variable                   |    Description
+---------------------------|----------------------------------------------------------------------------------------------------------
+ID                         | Participant ID
+                           |
+Start_time                 | Start time of the recording period
+                           |
+Samplefreq                 | Sampling frequency (Hz)
+                           |
+IV_Intradailyvariability   | Intra-daily variability
+                           |
+IS_Interdailystability     | Inter-daily stability
+                           |
+N valid hours              | Number of hours with valid data during the day
+
+## Part 4 .csv files
+
+There are two part 4 files, *part4_nightsummary_sleep_cleaned.csv*, which gives  and *part4_summary_sleep_cleaned.csv*. 
+
+Variable                        |    Description
+--------------------------------|-----------------------------------------------------------------------------------------------------
+Acc_onset/wake                  | Detected sleep onset/wake expressed as hours since the previous night (sleep and wake times are also available as a timestamp- e.g. acc_onset_ts)                            
+                                |
+Sleeplog_onset/wake             | Sleep onset/wake derived from the sleep log 
+                                |
+Error_onset/wake/dur            | Difference between sleep onset/wake/duration as estimated by accelerometer and estimated by sleep log/defined by researcher        
+                                |
+sleeplog_SptDuration            | Difference between onset and waking time (sleep log).
+                                |
+acc_SptDuration                 | Difference between onset and waking time (accelerometry).
+                                |
+acc_SleepDurationInSpt          | Total sleep duration, which equals the accumulated nocturnal sustained inactivity bouts within the Sleep Period Time.
+                                |
+Acc_dur_sibd                    | Accumulated sustained inactivity bouts during the day. These are the periods we would label during the night as sleep, but during the day they form a subclass of inactivity, which may represent day sleep (napping) or wakefulness while being motionless
+                                |
+Acc_n_noc                       | Number of nocturnal sleep periods
+                                |
+Acc_nsibd                       | Number of sustained inactivity periods during the day
+                                |
+Sleeplog_used                   | Whether a sleep log was used (TRUE/FALSE).
+                                |
+n_nights_complete               | Number of nights complete, which means both accelerometer and sleeplog data. 
+
+## Part 5 .csv files
+
+ Variable                        |    Description
+---------------------------------|-----------------------------------------------------------------------------------------------------
+dur_nightsleep_min               | Sleep duration in minutes
+                                 |
+dur_nightwak...                  | Night waking time
+                                 |
+sleep_efficiency                 | Sleep efficiency
+                                 |
+L5.../M10...                     | Variables relating to the least active 5 and most active 10 hours. Numbers may vary based on GGIR parameters (winhr). Some further L5 and M10 variables in part 2 output.
+
+For a more complete description of the variables available, please see the GGIR documentation here: https://cran.r-project.org/web/packages/GGIR/GGIR.pdf. 
+
+A dictionary of some key variables is also available here: https://cran.r-project.org/web/packages/GGIR/vignettes/GGIR.html
+
+
+## visualisation_sleep.pdf
+
+This file contains a graph showing sustained inactivity, which is produced if `do.visual = TRUE` in the shell function. Each line represents a single night. If there are multiple participants in the dataset, all will be included on the graph. The black hatched boxes are the sleep periods as defined by the sleep log (or in the absence of the sleep log, this seems to be a sleep window estimated from accelerometry). The blue colour is sustained inactivity bouts within this window, and the yellow/green colour is sustained inactivity bouts outside of this window. This visualisation is primarily useful to spot outliers (if outliers.only = TRUE in the GGIR shell function) which may indicate a problem in sleep estimates.
+
+```{r,echo=FALSE, fig.align='center'}
+knitr::include_graphics("vis_sleep.PNG")
+```
+
+
+## Key variables
+
+GGIR produces a large number of variables in the output. There is a dictionary of variables on the GGIR vignette page, and further details on these in the documentation. Here is a list of some of the key variables you may be interested in:
 
 Variable              |    Description
 ----------------------|--------------------------------------------------------------------------------------------------------------
