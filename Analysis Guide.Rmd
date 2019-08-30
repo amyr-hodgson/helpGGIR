@@ -12,7 +12,7 @@ output:
 
 This guide describes how to analyse data from the GENEActiv accelerometers in R.
 GGIR is an R package created by Dr Vincent van Hees to process raw accelerometry
-data. Van Hees provides a shell function, which can provide a number of
+data. A shell function is provided, which can provide a number of
 variables for activity and sleep research, requiring only the specification of
 input and output folder locations, as well as a few other small adjustments. The
 signal processing includes automatic calibration, detection of abnormal values,
@@ -50,7 +50,7 @@ Steps 3 & 4 relate to setting up the sleep diaries for use with GGIR. If you are
 
 ## Step 3: Set up your sleep diary
 
-GGIR can use basic infomation from a sleep diary to improve estimates of sleep parameters. Your sleep log should be set up so that the first column contains the participant IDs and the subsequent columns contain alternating sleep onset and wake times. The timestamps should be in HH:MM:SS format. See the GGIR vignette here (https://cran.r-project.org/web/packages/GGIR/vignettes/GGIR.html#output-part-4) for an example of how this should look. The first row should be column names, and each subsequent row should contain a participant ID and data.
+GGIR can use basic infomation from a sleep diary to improve estimates of sleep parameters. Your sleep log should be set up so that the first column contains the participant IDs and the subsequent columns contain alternating sleep onset and wake times. The timestamps should be in HH:MM:SS format. See the GGIR vignette here (https://cran.r-project.org/web/packages/GGIR/vignettes/GGIR.html#key-arguments-related-to-sleep-analysis) for an example of how this should look. The first row should be column names, and each subsequent row should contain a participant ID and data.
 
 ## Step 4: Sleep diary checklist
 
@@ -77,7 +77,7 @@ library(zoo)
 
 ```
 
-Secondly, you will need an R script or RMarkdown file to use for your analysis. I have included an otherwise blank .Rmd including the setup section and shell function in the *shell_function* file in this repository, which can be used as a template. 
+Secondly, you will need an R script or RMarkdown file to use for your analysis. I have included an otherwise blank .Rmd including the setup section and shell function in the *shell_function* file in the *helpGGIR* repository on my github (https://github.com/amyr-hodgson/helpGGIR), which can be used as a template. 
 
 The GGIR shell function itself, which is shown in Step 6, requires some input that is easier to specify beforehand. The arguments to specify are:
 
